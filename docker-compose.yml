@@ -1,0 +1,30 @@
+services:
+  web:
+    build: .
+    container_name: crm-system-api
+    ports:
+      - "8000:8000"
+    environment:
+      MYSQL_USER: crm-system-user
+      MYSQL_PASSWORD: crm-system-password
+      MYSQL_HOST: mysql
+      MYSQL_PORT: 3306
+      MYSQL_DATABASE: crm-system
+    command: >
+          sh -c "python /app/src/database/bootstrap.py && uvicorn main:app --host 0.0.0.0 --port 8000"
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    container_name: crm-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: mysql-root-password
+      MYSQL_DATABASE: crm-system
+      MYSQL_USER: crm-system-user
+      MYSQL_PASSWORD: crm-system-password
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./src/database/DDL:/docker-entrypoint-initdb.d
