@@ -7,8 +7,8 @@ from infra.session import engine
 from infra.session import AsyncSessionLocal
 from models.base import Base
 from models.account import Account
-from models.order import Order
 from models.message import Message
+from models.order import Order
 from models.message_log import MessageLog
 
 
@@ -40,6 +40,7 @@ async def bootstrap():
     await wait_for_connection(engine)
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
+        print("Models created")
 
     await insert_seed_data()
 

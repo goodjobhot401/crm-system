@@ -10,7 +10,7 @@ router = APIRouter()
 
 @router.post("/filter")
 async def get_order_filter(
-        # req: OrderFilterRequest,
+        req: OrderFilterRequest,
         db: AsyncSession = Depends(get_mysql_session)):
 
     return {"message": f"This is [post] /order/filter"}
