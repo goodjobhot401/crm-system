@@ -1,4 +1,5 @@
 import asyncio
+from pathlib import Path
 from sqlalchemy import text
 from sqlalchemy.exc import OperationalError
 from sqlalchemy.ext.asyncio import AsyncEngine
@@ -24,16 +25,15 @@ async def wait_for_connection(engine: AsyncEngine, retries: int = 10, delay: int
     raise Exception(f"MySQL connection failed")
 
 
-# async def create_seed_data():
-#     async with AsyncSessionLocal() as session:
-#         account_service = AccountService(db=session)
-#         coupon_service = CouponService(db=session)
-#         record_service = CouponRecordService(db=session, redis=redis_client)
-
-#         await account_service.create_seeds()
-#         await coupon_service.create_seeds()
-#         await record_service.create_seeds()
-#         print("Seed data created")
+async def insert_seed_data():
+    async with AsyncSessionLocal() as session:
+        DML_PATH = Path(__file__).parent / "DML"
+        for seed_script in sorted(DML_PATH.glob("*.sql")):
+            sql = seed_script.read_text(encoding="utf-8").strip()
+            if sql:
+                await session.execute(text(sql))
+        await session.commit()
+        print("Seed data inserted")
 
 
 async def bootstrap():
@@ -41,7 +41,7 @@ async def bootstrap():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
-    # await create_seed_data()
+    await insert_seed_data()
 
 
 if __name__ == "__main__":
