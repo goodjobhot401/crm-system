@@ -7,7 +7,7 @@
 
 `FastAPI + SQLAlchemy`：使用非同步 Web Framework 與 ORM
 
-`MySQL`：永久儲存使用者、優惠券、領取紀錄
+`MySQL`：永久儲存使用者、訂單、行銷訊息模板、訊息發縙紀錄
 
 `Docker`：使用容器化技術快速啟動所有依賴環境，自動建立資料表並寫入範例資料
 
