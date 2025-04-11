@@ -14,6 +14,7 @@ router = APIRouter()
 
 
 """
+example
 // 在 '指定日期區間' '金額區間' 
 {
     "date_filter": {
@@ -72,6 +73,28 @@ router = APIRouter()
 async def get_order_filter(
         req: OrderFilterRequest,
         db: AsyncSession = Depends(get_mysql_session)):
+    """
+        根據指定的 '時間' 與 '金額' 條件篩選客戶群，整理成 list 回傳
+
+        request body: OrderFilterRequest 由兩個欄位組成
+        - 'date_filter' 處理訂單的時間條件
+            filter_type 可為
+            - 'between'：介於 'from_date' ~ 'to_date'
+            - 'before'：早於指定日期 'before_date'
+            - 'after'：晚於指定日期 'after_date'
+            - 'last_n_days'：過去 N 天內, 'days' 為整數
+
+        - 'amount_filter' 處理消費金額條件
+            filter_type 可為
+            - 'between'：介於 'min_value' ~ 'max_value'
+            - 'gte'：大於等於 'amount'
+            - 'lte'：小於等於 'amount'
+
+        查詢邏輯
+            - 根據 '時間' 條件篩出客戶群資料
+            - 以 'account' 為組別算出每組的 'total_amout'
+            - 再依照 'total_amout' 篩選出符合 '金額' 條件的客戶群
+    """
 
     AccountAlias = aliased(Account)
 
