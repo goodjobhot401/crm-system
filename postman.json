@@ -10,10 +10,10 @@
 			"name": "account",
 			"item": [
 				{
-					"name": "{id}",
+					"name": "Get account's detail",
 					"item": [
 						{
-							"name": "{{baseUrl}}/account/{{id}}/order",
+							"name": "Get account's order record",
 							"request": {
 								"method": "GET",
 								"header": [
@@ -106,7 +106,7 @@
 							]
 						},
 						{
-							"name": "{{baseUrl}}/account/{{id}}/message",
+							"name": "Get account's message record",
 							"request": {
 								"method": "GET",
 								"header": [
@@ -201,7 +201,7 @@
 					]
 				},
 				{
-					"name": "{{baseUrl}}/account/all",
+					"name": "Get all account",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -263,7 +263,7 @@
 			"name": "message",
 			"item": [
 				{
-					"name": "{{baseUrl}}/message/templates",
+					"name": "Get all message template",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -320,7 +320,7 @@
 					]
 				},
 				{
-					"name": "{{baseUrl}}/message/send",
+					"name": "Send message to accosunt",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -441,7 +441,7 @@
 					]
 				},
 				{
-					"name": "{{baseUrl}}/message/{{message_log_id}}",
+					"name": "Get message log by id",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -533,7 +533,7 @@
 			]
 		},
 		{
-			"name": "{{baseUrl}}/order/filter",
+			"name": "Filter account list by order data",
 			"request": {
 				"method": "POST",
 				"header": [
